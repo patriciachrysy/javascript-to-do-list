@@ -99,3 +99,7 @@ body {
 .editing {
   background-color: #fffeca;
 }
+
+.hide {
+  display: none;
+}

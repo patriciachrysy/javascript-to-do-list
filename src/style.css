@@ -31,6 +31,30 @@ html,body {
 .container div {
     padding: 10px;
     border-bottom: 2px solid #f6f6f6;
+    display: flex;
+}
+
+.container div input[type='text'] {
+    width: 90%;
+    margin: 0 5px;
+    border: none;
+    background: transparent;
+}
+
+.container div input[type='text']:focus {
+    outline: none;
+}
+
+.container div form {
+    width: 100%;
+    display: flex;
+}
+
+.container div form input[type='text'] {
+    width: 94%;
+    border: none;
+    background: transparent;
+    font-style: italic;
 }
 
 .container div:first-child h1 {
@@ -49,4 +73,27 @@ html,body {
     height: 100%;
     background: transparent;
     border: none;
+}
+
+.dot-button, .enter-button {
+    border: none;
+    background: transparent;
+}
+
+.dot-button:after {
+    content: '\2807';
+    font-size: 15px;
+}
+
+.enter-button:after {
+    content: '\27A5';
+    font-size: 15px;
+}
+
+.crossed {
+    text-decoration: line-through;
+}
+
+.editing {
+    background-color: #fffeca;
 }

@@ -13,7 +13,7 @@ const toDoTasks = [
     },
     {
         description: "Example task one",
-        completed: false,
+        completed: true,
         index: 1
     },
     {
@@ -22,6 +22,62 @@ const toDoTasks = [
         index: 8
     }
 ]
+
+const displayTask = (task) => {
+    const divTask = document.createElement('div');
+
+    const radio = document.createElement('input');
+    radio.setAttribute('type', 'checkbox');
+    radio.setAttribute('data-id', task.index);
+
+    const textField = document.createElement('input');
+    textField.setAttribute('type', 'text');
+    textField.setAttribute('value', task.description);
+    if(task.completed) {
+        radio.setAttribute('checked', 'checked');
+        textField.classList.add('crossed');
+    };
+
+    radio.addEventListener('click', () => {
+        task.completed = !task.completed;
+        task.completed ? textField.classList.add('crossed') : textField.classList.remove('crossed');
+    });
+
+    const menuButton = document.createElement('button');
+    menuButton.classList.add('dot-button');
+    divTask.appendChild(radio);
+    divTask.appendChild(textField);
+    divTask.appendChild(menuButton);
+
+    textField.addEventListener('focusin', () => {
+        divTask.classList.add('editing');
+    });
+
+    textField.addEventListener('focusout', () => {
+        divTask.classList.remove('editing');
+    });
+
+    return divTask;
+}
+
+const displayForm = () => {
+    const formDiv = document.createElement('div');
+    const form = document.createElement('form');
+    const taskTextField = document.createElement('input');
+    taskTextField.setAttribute('type', 'text');
+    taskTextField.setAttribute('placeholder', 'Add to your list...');
+
+    form.appendChild(taskTextField);
+
+    const submitButton = document.createElement('button');
+    submitButton.classList.add('enter-button');
+
+    form.appendChild(submitButton);
+
+    formDiv.appendChild(form);
+
+    return formDiv;
+}
 
 const listTasks = () => {
     let sortedTasks = toDoTasks.sort((a, b) => {return a.index > b.index});
@@ -34,10 +90,10 @@ const listTasks = () => {
     titleDiv.appendChild(title);
     containerDiv.appendChild(titleDiv);
 
+    containerDiv.appendChild(displayForm());
+
     for(const task of sortedTasks) {
-        const div = document.createElement('div');
-        div.innerText = task.description;
-        containerDiv.appendChild(div);
+        containerDiv.appendChild(displayTask(task));
     };
 
     const footerDiv = document.createElement('div');

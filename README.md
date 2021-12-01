@@ -1,2 +1,48 @@
-# javascript-to-do-list
-A simple javascript to do list application built with Webpack, ES6, HTML5 and CSS3.
+# To Do List App
+
+> I am creating a to do list app as part of Microverse project
+
+![screenshot](https://github.com/microverseinc/curriculum-javascript/blob/main/books/images/awesome_books_full_website.png)
+
+"To Do List" is a simple app that help you record and manage tasks. You can create a new task, update it, mark it as complete, order in terms of priority and delete them when completed.
+
+## Built With
+
+- HTML
+- CSS
+- JavaScript
+- Webpack
+
+## Live Demo
+
+[Live Demo Link]()
+
+
+## Getting Started
+
+**Feel free to discover the code and help us improve it**
+
+
+## Author
+
+👤 **Patricia**
+
+- GitHub: [@githubhandle](https://github.compatriciachrysy)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Great team work on the project in Pair Programming
+- Thank you for Microverse for providing the required materials
+
+## 📝 License
+
+This project is [MIT](./MIT.md) licensed.

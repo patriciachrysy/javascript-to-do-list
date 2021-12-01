@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack://javascript-to-do-list/./src/index.js?");
+eval("const toDoTasks = [\n    {\n        description: \"Example task zero\",\n        completed: false,\n        index: 0\n    },\n    {\n        description: \"Example task five\",\n        completed: false,\n        index: 5\n    },\n    {\n        description: \"Example task one\",\n        completed: false,\n        index: 1\n    },\n    {\n        description: \"Example task eight\",\n        completed: false,\n        index: 8\n    }\n]\n\nconst listTasks = () => {\n    let sortedTasks = toDoTasks.sort((a, b) => {return a.index > b.index});\n    let htmlSortedTasks = [];\n\n    for(const task of sortedTasks) {\n        const div = document.createElement('div');\n        div.innerText = task.description;\n        htmlSortedTasks.push(div);\n    }\n\n    return htmlSortedTasks;\n}\n\nwindow.onload = () => {\n    const placeholder = document.querySelector('#to-do-list');\n    for(const element of listTasks()) {\n        placeholder.appendChild(element);\n    }\n};\n\n//# sourceURL=webpack://javascript-to-do-list/./src/index.js?");
 
 /***/ })
 

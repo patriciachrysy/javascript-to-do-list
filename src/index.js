@@ -1,3 +1,5 @@
+import './style.css';
+
 const toDoTasks = [
     {
         description: "Example task zero",
@@ -23,20 +25,33 @@ const toDoTasks = [
 
 const listTasks = () => {
     let sortedTasks = toDoTasks.sort((a, b) => {return a.index > b.index});
-    let htmlSortedTasks = [];
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('container');
+
+    const titleDiv = document.createElement('div');
+    const title = document.createElement('h1');
+    title.innerText = "Today's To Do";
+    titleDiv.appendChild(title);
+    containerDiv.appendChild(titleDiv);
 
     for(const task of sortedTasks) {
         const div = document.createElement('div');
         div.innerText = task.description;
-        htmlSortedTasks.push(div);
-    }
+        containerDiv.appendChild(div);
+    };
 
-    return htmlSortedTasks;
+    const footerDiv = document.createElement('div');
+    const button = document.createElement('button');
+    button.innerText = "Clear all completed";
+    footerDiv.appendChild(button);
+    containerDiv.appendChild(footerDiv);
+
+    return containerDiv;
 }
 
 window.onload = () => {
     const placeholder = document.querySelector('#to-do-list');
-    for(const element of listTasks()) {
-        placeholder.appendChild(element);
-    }
+    placeholder.classList.add('wrapper');
+
+    placeholder.appendChild(listTasks());
 };

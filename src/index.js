@@ -1,7 +1,7 @@
 import './style.css';
-import {updateTaskStatus} from './helpers';
+import updateTaskStatus from './helpers.js';
 
-if(!localStorage.getItem('TaskList')) {
+if (!localStorage.getItem('TaskList')) {
   const initTaskList = [
     {
       description: 'Example task zero',
@@ -24,12 +24,11 @@ if(!localStorage.getItem('TaskList')) {
       index: 8,
     },
   ];
-  
+
   localStorage.setItem('TaskList', JSON.stringify(initTaskList));
-};
+}
 
-let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
-
+const toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
 
 const displayTask = (task) => {
   const divTask = document.createElement('div');
@@ -47,13 +46,12 @@ const displayTask = (task) => {
   }
 
   radio.addEventListener('change', () => {
-    task = updateTaskStatus(task);
     toDoTasks.map((theTask) => {
-      if(theTask.index === parseInt(radio.getAttribute('data-id'))) {
-        theTask = task;
+      if (theTask.index === parseInt(radio.getAttribute('data-id'), 10)) {
+        theTask = updateTaskStatus(theTask);
       }
+      return 0;
     });
-    console.log(toDoTasks);
     localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
 
     if (task.completed) {

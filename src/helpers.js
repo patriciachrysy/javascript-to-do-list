@@ -1,4 +1,4 @@
-export const updateTaskStatus = (task) => {
-    task.completed = !task.completed;
-    return task;
-}
+export default (task) => {
+  task.completed = !task.completed;
+  return task;
+};

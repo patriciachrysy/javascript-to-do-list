@@ -1,27 +1,35 @@
 import './style.css';
+import {updateTaskStatus} from './helpers';
 
-const toDoTasks = [
-  {
-    description: 'Example task zero',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Example task five',
-    completed: false,
-    index: 5,
-  },
-  {
-    description: 'Example task one',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Example task eight',
-    completed: false,
-    index: 8,
-  },
-];
+if(!localStorage.getItem('TaskList')) {
+  const initTaskList = [
+    {
+      description: 'Example task zero',
+      completed: false,
+      index: 0,
+    },
+    {
+      description: 'Example task five',
+      completed: false,
+      index: 5,
+    },
+    {
+      description: 'Example task one',
+      completed: true,
+      index: 1,
+    },
+    {
+      description: 'Example task eight',
+      completed: false,
+      index: 8,
+    },
+  ];
+  
+  localStorage.setItem('TaskList', JSON.stringify(initTaskList));
+};
+
+let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
+
 
 const displayTask = (task) => {
   const divTask = document.createElement('div');
@@ -38,8 +46,16 @@ const displayTask = (task) => {
     textField.classList.add('crossed');
   }
 
-  radio.addEventListener('click', () => {
-    task.completed = !task.completed;
+  radio.addEventListener('change', () => {
+    task = updateTaskStatus(task);
+    toDoTasks.map((theTask) => {
+      if(theTask.index === parseInt(radio.getAttribute('data-id'))) {
+        theTask = task;
+      }
+    });
+    console.log(toDoTasks);
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+
     if (task.completed) {
       textField.classList.add('crossed');
     } else {

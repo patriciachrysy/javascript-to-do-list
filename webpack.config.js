@@ -5,12 +5,12 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   devServer: {
-      static: './dist',
+    static: './dist',
   },
   plugins: [
-      new HtmlWebpackPlugin({
-          template: './src/index.html',
-      }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
   ],
   output: {
     filename: 'main.js',
@@ -18,11 +18,11 @@ module.exports = {
     clean: true,
   },
   module: {
-      rules: [
-          {
-              test: /\.css/i,
-              use: ['style-loader', 'css-loader'],
-          },
-      ],
+    rules: [
+      {
+        test: /\.css/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
 };

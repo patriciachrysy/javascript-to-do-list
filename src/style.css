@@ -1,99 +1,101 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 
 * {
-    font-size: 15px;
-    font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
 }
 
-html,body {
-    margin: 0;
-    height: 100%;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  height: 100%;
+  padding: 0;
 }
 
 .wrapper {
-    background-color: #f6f6f6;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
-    /* display: flex; */
-    width: 40%;
-    border-radius: 3px;
-    background-color: #ffff;
-    box-shadow: 0px 2px 8px rgb(0 0 0 / 15%);
+  /* display: flex; */
+  width: 40%;
+  border-radius: 3px;
+  background-color: #ffff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 }
 
 .container div {
-    padding: 10px;
-    border-bottom: 2px solid #f6f6f6;
-    display: flex;
+  padding: 10px;
+  border-bottom: 2px solid #f6f6f6;
+  display: flex;
 }
 
 .container div input[type='text'] {
-    width: 90%;
-    margin: 0 5px;
-    border: none;
-    background: transparent;
-}
-
-.container div input[type='text']:focus {
-    outline: none;
-}
-
-.container div form {
-    width: 100%;
-    display: flex;
+  width: 90%;
+  margin: 0 5px;
+  border: none;
+  background: transparent;
 }
 
 .container div form input[type='text'] {
-    width: 94%;
-    border: none;
-    background: transparent;
-    font-style: italic;
+  width: 94%;
+  border: none;
+  background: transparent;
+  font-style: italic;
+}
+
+.container div input[type='text']:focus {
+  outline: none;
+}
+
+.container div form {
+  width: 100%;
+  display: flex;
 }
 
 .container div:first-child h1 {
-    font-weight: bolder;
-    font-size: 15px;
-    padding: 0;
-    margin: 0;
+  font-weight: bolder;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .container div:last-child {
-    background-color: #f6f6f6;
+  background-color: #f6f6f6;
 }
 
 .container div:last-child button {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
 }
 
-.dot-button, .enter-button {
-    border: none;
-    background: transparent;
+.dot-button,
+.enter-button {
+  border: none;
+  background: transparent;
 }
 
-.dot-button:after {
-    content: '\2807';
-    font-size: 15px;
+.dot-button::after {
+  content: '\2807';
+  font-size: 15px;
 }
 
-.enter-button:after {
-    content: '\27A5';
-    font-size: 15px;
+.enter-button::after {
+  content: '\27A5';
+  font-size: 15px;
 }
 
 .crossed {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .editing {
-    background-color: #fffeca;
+  background-color: #fffeca;
 }

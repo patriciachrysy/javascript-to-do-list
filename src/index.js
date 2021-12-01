@@ -84,7 +84,14 @@ const displayForm = () => {
 };
 
 const listTasks = () => {
-  const sortedTasks = toDoTasks.sort((a, b) => a.index > b.index);
+  const sortedTasks = toDoTasks.sort((a, b) => {
+    if (a.index > b.index) {
+      return 1;
+    } if (a.index < b.index) {
+      return -1;
+    }
+    return 0;
+  });
   const containerDiv = document.createElement('div');
   containerDiv.classList.add('container');
 
@@ -96,10 +103,7 @@ const listTasks = () => {
 
   containerDiv.appendChild(displayForm());
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const task of sortedTasks) {
-    containerDiv.appendChild(displayTask(task));
-  }
+  sortedTasks.map((task) => containerDiv.appendChild(displayTask(task)));
 
   const footerDiv = document.createElement('div');
   const button = document.createElement('button');

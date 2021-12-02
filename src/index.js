@@ -1,5 +1,7 @@
 import './style.css';
 import updateTaskStatus from './helpers.js';
+import dragTask from './dragHelper.js';
+import {dragUp, dragDown} from './dragHelper';
 
 if (!localStorage.getItem('TaskList')) {
   const initTaskList = [
@@ -28,10 +30,16 @@ if (!localStorage.getItem('TaskList')) {
   localStorage.setItem('TaskList', JSON.stringify(initTaskList));
 }
 
-const toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
+let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
+let draggingIndex = null;
+
+const placeholder = document.querySelector('#to-do-list');
+placeholder.classList.add('wrapper');
 
 const displayTask = (task) => {
   const divTask = document.createElement('div');
+  divTask.setAttribute('data-index', task.index);
+  divTask.draggable = true;
 
   const radio = document.createElement('input');
   radio.setAttribute('type', 'checkbox');
@@ -61,11 +69,12 @@ const displayTask = (task) => {
     }
   });
 
-  const menuButton = document.createElement('button');
-  menuButton.classList.add('dot-button');
+  const dragButton = document.createElement('button');
+  dragButton.classList.add('dot-button');
+
   divTask.appendChild(radio);
   divTask.appendChild(textField);
-  divTask.appendChild(menuButton);
+  divTask.appendChild(dragButton);
 
   textField.addEventListener('focusin', () => {
     divTask.classList.add('editing');
@@ -74,6 +83,38 @@ const displayTask = (task) => {
   textField.addEventListener('focusout', () => {
     divTask.classList.remove('editing');
   });
+
+  divTask.addEventListener('drag', () => {
+    draggingIndex = divTask.getAttribute('data-index');
+    divTask.classList.add('dragging');
+  });
+
+  divTask.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+
+  divTask.addEventListener('drop', () => {
+    let newIndex = divTask.getAttribute('data-index');
+    console.log(draggingIndex);
+    console.log(newIndex);
+    if(newIndex > draggingIndex) {
+      toDoTasks = dragDown(draggingIndex, newIndex, toDoTasks);
+    }else if(newIndex < draggingIndex) {
+      toDoTasks = dragUp(draggingIndex, newIndex, toDoTasks);
+    }
+    console.log(toDoTasks);
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    listTasks();
+  });
+
+  divTask.addEventListener('dragend', () => {
+    let prevDiv = document.querySelector('.dragging');
+    if(prevDiv) {
+      prevDiv.classList.remove('dragging');
+    }
+  });
+  
+
 
   return divTask;
 };
@@ -124,13 +165,11 @@ const listTasks = () => {
   button.innerText = 'Clear all completed';
   footerDiv.appendChild(button);
   containerDiv.appendChild(footerDiv);
-
-  return containerDiv;
+  
+  placeholder.innerHTML = '';
+  placeholder.appendChild(containerDiv);
 };
 
 window.onload = () => {
-  const placeholder = document.querySelector('#to-do-list');
-  placeholder.classList.add('wrapper');
-
-  placeholder.appendChild(listTasks());
+  listTasks();
 };

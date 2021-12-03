@@ -15,10 +15,18 @@
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://patriciachrysy.github.io/javascript-to-do-list/dist/)
 
 
 ## Getting Started
+
+Clone the project from here. Make sur you have the latest version of NodeJS en npm installed locally.
+
+Run the following commands as listed in your terminal:
+- npm install
+- npm run build
+- npm start
+
 
 **Feel free to discover the code and help us improve it**
 

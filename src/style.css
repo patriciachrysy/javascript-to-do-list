@@ -81,9 +81,9 @@ body {
   font-weight: bold;
 }
 
-
 .dot-button,
-.enter-button, .bin-button {
+.enter-button,
+.bin-button {
   border: none;
   background: transparent;
 }
@@ -127,4 +127,3 @@ body {
   background-color: #fffeca;
   opacity: 0.3;
 }
-

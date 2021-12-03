@@ -1,7 +1,8 @@
+/* eslint-disable no-use-before-define */
+
 import './style.css';
 import updateTaskStatus from './helpers.js';
-import dragTask from './dragHelper.js';
-import {dragUp, dragDown} from './dragHelper';
+import * as dragActions from './dragHelper.js';
 import * as taskActions from './taskActionsHelper.js';
 
 let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
@@ -49,12 +50,12 @@ const displayTask = (task) => {
   dragButton.setAttribute('data-action', 'drag');
 
   dragButton.addEventListener('click', () => {
-    if(buttonAction !== dragButton.getAttribute('data-action')) {
+    if (buttonAction !== dragButton.getAttribute('data-action')) {
       toDoTasks = taskActions.deleteTask(task.index, toDoTasks);
       localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
       listTasks();
     }
-  })
+  });
 
   divTask.appendChild(radio);
   divTask.appendChild(textField);
@@ -74,11 +75,12 @@ const displayTask = (task) => {
     dragButton.classList.add('dot-button');
     dragButton.setAttribute('data-action', 'drag');
 
-    if (textField.value !== task.description) {
+    if (textField.value.trim().length > 0 && textField.value !== task.description) {
       toDoTasks = taskActions.editTask(textField.value, task.index, toDoTasks);
       localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
       listTasks();
     }
+    textField.value = task.description;
   });
 
   divTask.addEventListener('drag', () => {
@@ -91,12 +93,12 @@ const displayTask = (task) => {
   });
 
   divTask.addEventListener('drop', () => {
-    let newIndex = divTask.getAttribute('data-index');
-    
-    if(newIndex > draggingIndex) {
-      toDoTasks = dragDown(draggingIndex, newIndex, toDoTasks);
-    }else if(newIndex < draggingIndex) {
-      toDoTasks = dragUp(draggingIndex, newIndex, toDoTasks);
+    const newIndex = divTask.getAttribute('data-index');
+
+    if (newIndex > draggingIndex) {
+      toDoTasks = dragActions.dragDown(draggingIndex, newIndex, toDoTasks);
+    } else if (newIndex < draggingIndex) {
+      toDoTasks = dragActions.dragUp(draggingIndex, newIndex, toDoTasks);
     }
 
     localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
@@ -104,13 +106,11 @@ const displayTask = (task) => {
   });
 
   divTask.addEventListener('dragend', () => {
-    let prevDiv = document.querySelector('.dragging');
-    if(prevDiv) {
+    const prevDiv = document.querySelector('.dragging');
+    if (prevDiv) {
       prevDiv.classList.remove('dragging');
     }
   });
-  
-
 
   return divTask;
 };
@@ -130,8 +130,10 @@ const displayForm = () => {
 
   submitButton.addEventListener('click', (e) => {
     e.preventDefault();
-    toDoTasks = taskActions.addTask(taskTextField.value, toDoTasks);
-    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    if (taskTextField.value.trim().length > 0) {
+      toDoTasks = taskActions.addTask(taskTextField.value, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    }
     listTasks();
   });
 
@@ -171,11 +173,11 @@ const listTasks = () => {
     toDoTasks = taskActions.clearCompletedTasks(toDoTasks);
     localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
     listTasks();
-  })
+  });
 
   footerDiv.appendChild(button);
   containerDiv.appendChild(footerDiv);
-  
+
   placeholder.innerHTML = '';
   placeholder.appendChild(containerDiv);
 };

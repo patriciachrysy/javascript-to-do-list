@@ -1,56 +1,52 @@
 export const addTask = (description, taskList) => {
-    let taskIndex = taskList.length;
-    
-    let task = {
-        description: description,
-        completed: false,
-        index: taskIndex
-    };
+  const taskIndex = taskList.length;
 
-    taskList.push(task);
+  const task = {
+    description,
+    completed: false,
+    index: taskIndex,
+  };
 
-    return taskList;
-}
+  taskList.push(task);
+
+  return taskList;
+};
 
 export const editTask = (description, taskIndex, taskList) => {
-    let theTask = null;
-    let taskPosition = null;
-    taskList.map((task, pos) => {
-        if(task.index === parseInt(taskIndex, 10)) {
-            theTask = task;
-            taskPosition = pos;
-        }
-    });
+  let theTask = null;
+  let taskPosition = null;
+  taskList.map((task, pos) => {
+    if (task.index === parseInt(taskIndex, 10)) {
+      theTask = task;
+      taskPosition = pos;
+    }
+    return 0;
+  });
 
-    theTask.description = description;
-    taskList[taskPosition] = theTask;
+  theTask.description = description;
+  taskList[taskPosition] = theTask;
 
-    return taskList;
-}
+  return taskList;
+};
 
 export const deleteTask = (taskIndex, taskList) => {
-    let theTask = null;
-    taskList.map((task) => {
-        if(task.index === parseInt(taskIndex, 10)) {
-            theTask = task;
-        }
-    });
+  taskList = taskList.filter((task) => task.index !== parseInt(taskIndex, 10));
 
-    taskList = taskList.filter((task) => task.index !== parseInt(taskIndex, 10));
+  taskList.map((task, pos) => {
+    task.index = pos;
+    return 0;
+  });
 
-    taskList.map((task, pos) => {
-        task.index = pos;
-    });
-    
-    return taskList;
-}
+  return taskList;
+};
 
 export const clearCompletedTasks = (taskList) => {
-    taskList = taskList.filter((task) => task.completed !== true);
+  taskList = taskList.filter((task) => task.completed !== true);
 
-    taskList.map((task, pos) => {
-        task.index = pos;
-    });
+  taskList.map((task, pos) => {
+    task.index = pos;
+    return 0;
+  });
 
-    return taskList;
-}
+  return taskList;
+};

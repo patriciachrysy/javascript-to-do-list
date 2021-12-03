@@ -1,37 +1,21 @@
+/* eslint-disable no-use-before-define */
+
 import './style.css';
 import updateTaskStatus from './helpers.js';
+import * as dragActions from './dragHelper.js';
+import * as taskActions from './taskActionsHelper.js';
 
-if (!localStorage.getItem('TaskList')) {
-  const initTaskList = [
-    {
-      description: 'Example task zero',
-      completed: false,
-      index: 0,
-    },
-    {
-      description: 'Example task five',
-      completed: false,
-      index: 5,
-    },
-    {
-      description: 'Example task one',
-      completed: true,
-      index: 1,
-    },
-    {
-      description: 'Example task eight',
-      completed: false,
-      index: 8,
-    },
-  ];
+let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
+let draggingIndex = null;
+let buttonAction = 'drag';
 
-  localStorage.setItem('TaskList', JSON.stringify(initTaskList));
-}
-
-const toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
+const placeholder = document.querySelector('#to-do-list');
+placeholder.classList.add('wrapper');
 
 const displayTask = (task) => {
   const divTask = document.createElement('div');
+  divTask.setAttribute('data-index', task.index);
+  divTask.draggable = true;
 
   const radio = document.createElement('input');
   radio.setAttribute('type', 'checkbox');
@@ -61,18 +45,71 @@ const displayTask = (task) => {
     }
   });
 
-  const menuButton = document.createElement('button');
-  menuButton.classList.add('dot-button');
+  const dragButton = document.createElement('button');
+  dragButton.classList.add('dot-button');
+  dragButton.setAttribute('data-action', 'drag');
+
+  dragButton.addEventListener('click', () => {
+    if (buttonAction !== dragButton.getAttribute('data-action')) {
+      toDoTasks = taskActions.deleteTask(task.index, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+      listTasks();
+    }
+  });
+
   divTask.appendChild(radio);
   divTask.appendChild(textField);
-  divTask.appendChild(menuButton);
+  divTask.appendChild(dragButton);
 
   textField.addEventListener('focusin', () => {
     divTask.classList.add('editing');
+    dragButton.classList.remove('dot-button');
+    dragButton.classList.add('bin-button');
+    dragButton.setAttribute('data-action', 'delete');
+    buttonAction = 'delete';
   });
 
   textField.addEventListener('focusout', () => {
     divTask.classList.remove('editing');
+    dragButton.classList.remove('bin-button');
+    dragButton.classList.add('dot-button');
+    dragButton.setAttribute('data-action', 'drag');
+
+    if (textField.value.trim().length > 0 && textField.value !== task.description) {
+      toDoTasks = taskActions.editTask(textField.value, task.index, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+      listTasks();
+    }
+    textField.value = task.description;
+  });
+
+  divTask.addEventListener('drag', () => {
+    draggingIndex = divTask.getAttribute('data-index');
+    divTask.classList.add('dragging');
+  });
+
+  divTask.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+
+  divTask.addEventListener('drop', () => {
+    const newIndex = divTask.getAttribute('data-index');
+
+    if (newIndex > draggingIndex) {
+      toDoTasks = dragActions.dragDown(draggingIndex, newIndex, toDoTasks);
+    } else if (newIndex < draggingIndex) {
+      toDoTasks = dragActions.dragUp(draggingIndex, newIndex, toDoTasks);
+    }
+
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    listTasks();
+  });
+
+  divTask.addEventListener('dragend', () => {
+    const prevDiv = document.querySelector('.dragging');
+    if (prevDiv) {
+      prevDiv.classList.remove('dragging');
+    }
   });
 
   return divTask;
@@ -81,6 +118,7 @@ const displayTask = (task) => {
 const displayForm = () => {
   const formDiv = document.createElement('div');
   const form = document.createElement('form');
+  form.setAttribute('action', '#');
   const taskTextField = document.createElement('input');
   taskTextField.setAttribute('type', 'text');
   taskTextField.setAttribute('placeholder', 'Add to your list...');
@@ -89,6 +127,15 @@ const displayForm = () => {
 
   const submitButton = document.createElement('button');
   submitButton.classList.add('enter-button');
+
+  submitButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (taskTextField.value.trim().length > 0) {
+      toDoTasks = taskActions.addTask(taskTextField.value, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    }
+    listTasks();
+  });
 
   form.appendChild(submitButton);
 
@@ -122,15 +169,19 @@ const listTasks = () => {
   const footerDiv = document.createElement('div');
   const button = document.createElement('button');
   button.innerText = 'Clear all completed';
+  button.addEventListener('click', () => {
+    toDoTasks = taskActions.clearCompletedTasks(toDoTasks);
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    listTasks();
+  });
+
   footerDiv.appendChild(button);
   containerDiv.appendChild(footerDiv);
 
-  return containerDiv;
+  placeholder.innerHTML = '';
+  placeholder.appendChild(containerDiv);
 };
 
 window.onload = () => {
-  const placeholder = document.querySelector('#to-do-list');
-  placeholder.classList.add('wrapper');
-
-  placeholder.appendChild(listTasks());
+  listTasks();
 };

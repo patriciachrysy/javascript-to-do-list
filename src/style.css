@@ -76,20 +76,39 @@ body {
   border: none;
 }
 
+.container div:last-child button:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
 .dot-button,
-.enter-button {
+.enter-button,
+.bin-button {
   border: none;
   background: transparent;
+}
+
+.bin-button::after {
+  content: '\1F5D1';
+  font-size: 15px;
+  color: lightgrey;
 }
 
 .dot-button::after {
   content: '\2807';
   font-size: 15px;
+  color: darkgrey;
+}
+
+.dot-button:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="font-size: 21px; color:grey;"><text y="15">\2725</text></svg>'), auto;
+  color: black;
 }
 
 .enter-button::after {
   content: '\27A5';
   font-size: 15px;
+  color: darkgrey;
 }
 
 .crossed {
@@ -102,4 +121,9 @@ body {
 
 .hide {
   display: none;
+}
+
+.dragging {
+  background-color: #fffeca;
+  opacity: 0.3;
 }

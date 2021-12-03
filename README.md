@@ -2,7 +2,7 @@
 
 > I am creating a to do list app as part of Microverse project
 
-![screenshot](https://github.com/microverseinc/curriculum-javascript/blob/main/books/images/awesome_books_full_website.png)
+![screenshot](./readme_archive.png)
 
 "To Do List" is a simple app that help you record and manage tasks. You can create a new task, update it, mark it as complete, order in terms of priority and delete them when completed.
 
@@ -15,10 +15,18 @@
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://patriciachrysy.github.io/javascript-to-do-list/dist/)
 
 
 ## Getting Started
+
+Clone the project from here. Make sur you have the latest version of NodeJS en npm installed locally.
+
+Run the following commands as listed in your terminal:
+- npm install
+- npm run build
+- npm start
+
 
 **Feel free to discover the code and help us improve it**
 

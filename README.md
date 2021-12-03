@@ -2,7 +2,7 @@
 
 > I am creating a to do list app as part of Microverse project
 
-![screenshot](./readme_archive.png.png)
+![screenshot](./readme_archive.png)
 
 "To Do List" is a simple app that help you record and manage tasks. You can create a new task, update it, mark it as complete, order in terms of priority and delete them when completed.
 

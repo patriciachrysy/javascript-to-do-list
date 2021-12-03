@@ -76,16 +76,28 @@ body {
   border: none;
 }
 
+.container div:last-child button:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+
 .dot-button,
-.enter-button {
+.enter-button, .bin-button {
   border: none;
   background: transparent;
+}
+
+.bin-button::after {
+  content: '\1F5D1';
+  font-size: 15px;
+  color: lightgrey;
 }
 
 .dot-button::after {
   content: '\2807';
   font-size: 15px;
-  color: lightgrey;
+  color: darkgrey;
 }
 
 .dot-button:hover {
@@ -96,7 +108,7 @@ body {
 .enter-button::after {
   content: '\27A5';
   font-size: 15px;
-  color: lightgrey;
+  color: darkgrey;
 }
 
 .crossed {

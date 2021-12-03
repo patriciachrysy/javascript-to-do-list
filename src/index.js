@@ -2,36 +2,11 @@ import './style.css';
 import updateTaskStatus from './helpers.js';
 import dragTask from './dragHelper.js';
 import {dragUp, dragDown} from './dragHelper';
-
-if (!localStorage.getItem('TaskList')) {
-  const initTaskList = [
-    {
-      description: 'Example task zero',
-      completed: false,
-      index: 0,
-    },
-    {
-      description: 'Example task five',
-      completed: false,
-      index: 5,
-    },
-    {
-      description: 'Example task one',
-      completed: true,
-      index: 1,
-    },
-    {
-      description: 'Example task eight',
-      completed: false,
-      index: 8,
-    },
-  ];
-
-  localStorage.setItem('TaskList', JSON.stringify(initTaskList));
-}
+import * as taskActions from './taskActionsHelper.js';
 
 let toDoTasks = JSON.parse(localStorage.getItem('TaskList') || '[]');
 let draggingIndex = null;
+let buttonAction = 'drag';
 
 const placeholder = document.querySelector('#to-do-list');
 placeholder.classList.add('wrapper');
@@ -71,6 +46,15 @@ const displayTask = (task) => {
 
   const dragButton = document.createElement('button');
   dragButton.classList.add('dot-button');
+  dragButton.setAttribute('data-action', 'drag');
+
+  dragButton.addEventListener('click', () => {
+    if(buttonAction !== dragButton.getAttribute('data-action')) {
+      toDoTasks = taskActions.deleteTask(task.index, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+      listTasks();
+    }
+  })
 
   divTask.appendChild(radio);
   divTask.appendChild(textField);
@@ -78,10 +62,23 @@ const displayTask = (task) => {
 
   textField.addEventListener('focusin', () => {
     divTask.classList.add('editing');
+    dragButton.classList.remove('dot-button');
+    dragButton.classList.add('bin-button');
+    dragButton.setAttribute('data-action', 'delete');
+    buttonAction = 'delete';
   });
 
   textField.addEventListener('focusout', () => {
     divTask.classList.remove('editing');
+    dragButton.classList.remove('bin-button');
+    dragButton.classList.add('dot-button');
+    dragButton.setAttribute('data-action', 'drag');
+
+    if (textField.value !== task.description) {
+      toDoTasks = taskActions.editTask(textField.value, task.index, toDoTasks);
+      localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+      listTasks();
+    }
   });
 
   divTask.addEventListener('drag', () => {
@@ -95,14 +92,13 @@ const displayTask = (task) => {
 
   divTask.addEventListener('drop', () => {
     let newIndex = divTask.getAttribute('data-index');
-    console.log(draggingIndex);
-    console.log(newIndex);
+    
     if(newIndex > draggingIndex) {
       toDoTasks = dragDown(draggingIndex, newIndex, toDoTasks);
     }else if(newIndex < draggingIndex) {
       toDoTasks = dragUp(draggingIndex, newIndex, toDoTasks);
     }
-    console.log(toDoTasks);
+
     localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
     listTasks();
   });
@@ -122,6 +118,7 @@ const displayTask = (task) => {
 const displayForm = () => {
   const formDiv = document.createElement('div');
   const form = document.createElement('form');
+  form.setAttribute('action', '#');
   const taskTextField = document.createElement('input');
   taskTextField.setAttribute('type', 'text');
   taskTextField.setAttribute('placeholder', 'Add to your list...');
@@ -130,6 +127,13 @@ const displayForm = () => {
 
   const submitButton = document.createElement('button');
   submitButton.classList.add('enter-button');
+
+  submitButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    toDoTasks = taskActions.addTask(taskTextField.value, toDoTasks);
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    listTasks();
+  });
 
   form.appendChild(submitButton);
 
@@ -163,6 +167,12 @@ const listTasks = () => {
   const footerDiv = document.createElement('div');
   const button = document.createElement('button');
   button.innerText = 'Clear all completed';
+  button.addEventListener('click', () => {
+    toDoTasks = taskActions.clearCompletedTasks(toDoTasks);
+    localStorage.setItem('TaskList', JSON.stringify(toDoTasks));
+    listTasks();
+  })
+
   footerDiv.appendChild(button);
   containerDiv.appendChild(footerDiv);
   

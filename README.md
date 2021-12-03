@@ -2,7 +2,7 @@
 
 > I am creating a to do list app as part of Microverse project
 
-![screenshot](https://github.com/microverseinc/curriculum-javascript/blob/main/books/images/awesome_books_full_website.png)
+![screenshot](./readme_archive.png.png)
 
 "To Do List" is a simple app that help you record and manage tasks. You can create a new task, update it, mark it as complete, order in terms of priority and delete them when completed.
 

@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639054923775" clover="3.2.0">
-  <project timestamp="1639054923776" name="All files">
-    <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1" elements="3" coveredelements="3" complexity="0" loc="2" ncloc="2" packages="1" files="1" classes="1"/>
+<coverage generated="1639056237020" clover="3.2.0">
+  <project timestamp="1639056237021" name="All files">
+    <metrics statements="30" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="3" elements="42" coveredelements="21" complexity="0" loc="30" ncloc="30" packages="1" files="2" classes="2"/>
     <file name="helpers.js" path="/home/manezeu/Microverse-projects/javascript-to-do-list/src/helpers.js">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
+    </file>
+    <file name="taskActionsHelper.js" path="/home/manezeu/Microverse-projects/javascript-to-do-list/src/taskActionsHelper.js">
+      <metrics statements="28" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="23" count="2" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+      <line num="32" count="1" type="stmt"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="35" count="0" type="stmt"/>
+      <line num="36" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="40" count="0" type="stmt"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="44" count="0" type="stmt"/>
+      <line num="46" count="0" type="stmt"/>
+      <line num="47" count="0" type="stmt"/>
+      <line num="48" count="0" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
     </file>
   </project>
 </coverage>
